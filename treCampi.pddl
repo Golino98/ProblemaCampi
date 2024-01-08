@@ -1,4 +1,4 @@
-(define (problem treCampi) (:domain CAMPI_SENZA_PASSAGGIO)
+(define (problem treCampi) (:domain CAMPI_ARA_E_PASSA)
 (:objects 
         traA1 traA2 traS1 traS2 aratro1 aratro2 seminatore1 seminatore2
         contadino1 contadino2
