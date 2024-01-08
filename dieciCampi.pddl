@@ -55,7 +55,7 @@
     (CONNESSO cam10 cam9)
     (CONNESSO cam5 cam1)
     (CONNESSO cam1 cam5)
-    (at traA1 cam1);; dynamic predicates
+    (at traA1 cam1)
     (at traA2 cam5)
     (at traS1 cam1)
     (at traS2 cam4)
@@ -78,9 +78,9 @@
    (seminato cam2)
    (seminato cam3)
    (seminato cam4)
-   (seminato cam5)))
+   (seminato cam5)
+   
+   )
 
 )
-
-;un-comment the following line if metric is needed
-;(:metric minimize (???))
+)

@@ -1,4 +1,4 @@
-(define (domain CAMPI)
+(define (domain CAMPI_SENZA_PASSAGGIO)
 
 (:requirements :typing)
 
@@ -32,6 +32,24 @@
 			(not (at ?cont ?campocorrente)))
 	)
 
+(:action spostaDueContadini
+	:parameters (?cont1 ?cont2 ?campocorrente ?camposuccessivo)
+	:precondition (and 
+			(contadino ?cont1)
+			(contadino ?cont2)
+			(CAMPO ?campocorrente)
+			(CAMPO ?camposuccessivo)
+			(at ?cont1 ?campocorrente)
+			(at ?cont2 ?campocorrente)
+			(CONNESSO ?campocorrente ?camposuccessivo))
+	:effect (and 
+			(at ?cont1 ?camposuccessivo)
+			(not (at ?cont1 ?campocorrente))
+			(at ?cont2 ?camposuccessivo)
+			(not (at ?cont2 ?campocorrente))
+			)
+	)
+
 	(:action spostaContadinoSulTrattore
 	:parameters (?cont ?tra ?campocorrente ?camposuccessivo)
 	:precondition (and (contadino ?cont)
@@ -45,6 +63,31 @@
 			(CONNESSO ?campocorrente ?camposuccessivo))
 	:effect (and (at ?cont ?camposuccessivo)
 			(not (at ?cont ?campocorrente))
+			(at ?tra ?camposuccessivo)
+			(not (at ?tra ?campocorrente)))
+	)
+
+	(:action spostaDueContadiniSulTrattore
+	:parameters (?cont1 ?cont2 ?tra ?campocorrente ?camposuccessivo)
+	:precondition (and 
+			(contadino ?cont1)
+			(contadino ?cont2)
+			(TRA ?tra)
+			(CAMPO ?campocorrente)
+			(CAMPO ?camposuccessivo)
+			(at ?cont1 ?campocorrente)
+			(at ?cont2 ?campocorrente)
+			(at ?tra ?campocorrente)
+			(on ?cont1 ?tra)
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont1)
+			(isSopraTrattore ?cont2)
+			(CONNESSO ?campocorrente ?camposuccessivo))
+	:effect (and 
+			(at ?cont1 ?camposuccessivo)
+			(not (at ?cont1 ?campocorrente))
+			(at ?cont2 ?camposuccessivo)
+			(not (at ?cont2 ?campocorrente))
 			(at ?tra ?camposuccessivo)
 			(not (at ?tra ?campocorrente)))
 	)
@@ -112,6 +155,46 @@
 			(isSopraTrattore ?cont))
 	)
 
+	(:action saleSecondo
+	:parameters (?cont1 ?cont2 ?tra ?camp)
+	:precondition (and 
+			(contadino ?cont1)
+			(contadino ?cont2)
+			(TRA ?tra)
+			(CAMPO ?camp)
+			(at ?cont1 ?camp)
+			(at ?cont2 ?camp)
+			(at ?tra ?camp)
+			(on ?cont1 ?tra)
+			(isSopraTrattore ?cont1)
+			(not (on ?cont2 ?tra))
+			(not (isSopraTrattore ?cont2)))
+	:effect (and (on ?cont2 ?tra)
+			(isSopraTrattore ?cont2))
+	)
+
+	(:action salgonoInDue
+	:parameters (?cont1 ?cont2 ?tra ?camp)
+	:precondition (and 
+			(contadino ?cont1)
+			(contadino ?cont2)
+			(TRA ?tra)
+			(CAMPO ?camp)
+			(at ?cont1 ?camp)
+			(at ?cont2 ?camp)
+			(not(at ?tra ?camp))
+			(not(on ?cont1 ?tra))
+			(not(on ?cont2 ?tra))
+			(not(isSopraTrattore ?cont1))
+			(not(isSopraTrattore ?cont2)))
+	:effect (and 
+			(on ?cont1 ?tra)
+			(isSopraTrattore ?cont1)			
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont2))
+	)
+
+
 	(:action scendi
 	:parameters (?cont ?tra ?camp)
 	:precondition (and (contadino ?cont)
@@ -123,6 +206,47 @@
 			(isSopraTrattore ?cont))
 	:effect (and (not(on ?cont ?tra))
 			(not (isSopraTrattore ?cont)))
+	)
+
+	(:action scendeSecondo
+	:parameters (?cont1 ?cont2 ?tra ?camp)
+	:precondition (and (contadino ?cont1)
+			(contadino ?cont2)
+			(TRA ?tra)
+			(CAMPO ?camp)
+			(at ?cont1 ?camp)
+			(at ?cont2 ?camp)
+			(at ?tra ?camp)
+			(on ?cont1 ?tra)
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont1)
+			(isSopraTrattore ?cont2)
+			)
+	:effect (and (not(on ?cont2 ?tra))
+			(not (isSopraTrattore ?cont2)))
+	)
+	
+	(:action scendonoInDue
+	:parameters (?cont1 ?cont2 ?tra ?camp)
+	:precondition (and (contadino ?cont1)
+			(contadino ?cont2)
+			(TRA ?tra)
+			(CAMPO ?camp)
+			(at ?cont1 ?camp)
+			(at ?cont2 ?camp)
+			(at ?tra ?camp)
+			(on ?cont1 ?tra)
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont1)
+			(isSopraTrattore ?cont2)
+			)
+	:effect (and 
+			(not(on ?cont1 ?tra))
+			(not (isSopraTrattore ?cont1))
+
+			(not(on ?cont2 ?tra))
+			(not (isSopraTrattore ?cont2))
+			)
 	)
 
 ;azioni per arare
@@ -161,9 +285,8 @@
 			(not (arato ?campocorrente))
 			(on ?cont ?tra)
 			(isSopraTrattore ?cont))
-	:effect (and
-			(arato ?campocorrente)
-	))
+	:effect (and(arato ?campocorrente)))
+
 
 	(:action semina
 	:parameters (?cont ?tra ?attr ?campocorrente)
@@ -179,9 +302,7 @@
 			(on ?cont ?tra)
 			(isSopraTrattore ?cont)
 			(not (seminato ?campocorrente)))
-	:effect (and
-			(seminato ?campocorrente))
-    )
+	:effect (and(seminato ?campocorrente)))
 
 	(:action smontaAratro
 	:parameters (?cont ?tra ?attr ?camp)
