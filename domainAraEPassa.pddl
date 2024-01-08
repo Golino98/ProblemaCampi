@@ -1,6 +1,6 @@
 (define (domain CAMPI_ARA_E_PASSA)
 
-(:requirements :typing)
+(:requirements :typing :equality :negative-preconditions)
 
 (:predicates (CAMPO ?campo)
 		(contadino ?cont)
@@ -41,7 +41,9 @@
 			(CAMPO ?camposuccessivo)
 			(at ?cont1 ?campocorrente)
 			(at ?cont2 ?campocorrente)
-			(CONNESSO ?campocorrente ?camposuccessivo))
+			(CONNESSO ?campocorrente ?camposuccessivo)
+			(not (= ?cont1 ?cont2))
+			)
 	:effect (and 
 			(at ?cont1 ?camposuccessivo)
 			(not (at ?cont1 ?campocorrente))
@@ -132,6 +134,7 @@
 			(on ?cont2 ?tra)
 			(isSopraTrattore ?cont1)
 			(isSopraTrattore ?cont2)
+			(not (= ?cont1 ?cont2))
 			(CONNESSO ?campocorrente ?camposuccessivo))
 	:effect (and 
 			(at ?cont1 ?camposuccessivo)
@@ -163,6 +166,7 @@
 			(on ?cont2 ?tra)
 			(isSopraTrattore ?cont1)
 			(isSopraTrattore ?cont2)
+			(not (= ?cont1 ?cont2))
 			(CONNESSO ?campocorrente ?camposuccessivo))
 	:effect (and 
 			(at ?cont1 ?camposuccessivo)
@@ -189,6 +193,7 @@
 			(at ?cont2 ?campocorrente)
 			(at ?tra ?campocorrente)
 			(at ?attr ?campocorrente)
+			(not (= ?cont1 ?cont2))
 			(on ?cont1 ?tra)
 			(on ?cont2 ?tra)
 			(isAttaccato ?attr)
@@ -233,6 +238,7 @@
 			(at ?tra ?camp)
 			(on ?cont1 ?tra)
 			(isSopraTrattore ?cont1)
+			(not (= ?cont1 ?cont2))
 			(not (on ?cont2 ?tra))
 			(not (isSopraTrattore ?cont2)))
 	:effect (and (on ?cont2 ?tra)
@@ -251,6 +257,7 @@
 			(not(at ?tra ?camp))
 			(not(on ?cont1 ?tra))
 			(not(on ?cont2 ?tra))
+			(not (= ?cont1 ?cont2))
 			(not(isSopraTrattore ?cont1))
 			(not(isSopraTrattore ?cont2)))
 	:effect (and 
@@ -281,6 +288,7 @@
 			(CAMPO ?camp)
 			(at ?cont1 ?camp)
 			(at ?cont2 ?camp)
+			(not (= ?cont1 ?cont2))
 			(at ?tra ?camp)
 			(on ?cont1 ?tra)
 			(on ?cont2 ?tra)
@@ -299,6 +307,7 @@
 			(CAMPO ?camp)
 			(at ?cont1 ?camp)
 			(at ?cont2 ?camp)
+			(not (= ?cont1 ?cont2))
 			(at ?tra ?camp)
 			(on ?cont1 ?tra)
 			(on ?cont2 ?tra)
