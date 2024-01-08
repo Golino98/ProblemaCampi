@@ -149,7 +149,6 @@
 			(at ?attr ?camposuccessivo)
 			(not (at ?attr ?campocorrente)))
 	)
-	
 
 	(:action spostaContadinoSulTrattoreConSeminatore
 	:parameters (?cont ?tra ?attr ?campocorrente ?camposuccessivo)
