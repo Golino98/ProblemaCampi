@@ -32,24 +32,6 @@
 			(not (at ?cont ?campocorrente)))
 	)
 
-(:action spostaDueContadini
-	:parameters (?cont1 ?cont2 ?campocorrente ?camposuccessivo)
-	:precondition (and 
-			(contadino ?cont1)
-			(contadino ?cont2)
-			(CAMPO ?campocorrente)
-			(CAMPO ?camposuccessivo)
-			(at ?cont1 ?campocorrente)
-			(at ?cont2 ?campocorrente)
-			(CONNESSO ?campocorrente ?camposuccessivo))
-	:effect (and 
-			(at ?cont1 ?camposuccessivo)
-			(not (at ?cont1 ?campocorrente))
-			(at ?cont2 ?camposuccessivo)
-			(not (at ?cont2 ?campocorrente))
-			)
-	)
-
 	(:action spostaContadinoSulTrattore
 	:parameters (?cont ?tra ?campocorrente ?camposuccessivo)
 	:precondition (and (contadino ?cont)
@@ -314,10 +296,32 @@
 	:effect (arato ?camp)
     )
 
+	(:action araInDue
+	:parameters (?cont ?cont2 ?tra ?attr ?camp)
+	:precondition (and 
+			(contadino ?cont)
+			(contadino ?cont2)
+			(TRA-ARA ?tra)
+			(ARATRO ?attr)
+			(CAMPO ?camp)
+			(at ?cont ?camp)
+			(at ?cont2 ?camp)
+			(at ?tra ?camp)
+			(at ?attr ?camp)
+			(attaccato ?attr ?tra)
+			(on ?cont ?tra)
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont)
+			(isSopraTrattore ?cont2)
+			(not (= ?cont ?cont2))
+			(not (arato ?camp)))
+	:effect (arato ?camp)
+    )
 
 	(:action semina
 	:parameters (?cont ?tra ?attr ?campocorrente)
-	:precondition (and (contadino ?cont)
+	:precondition (and 
+			(contadino ?cont)
 			(TRA-SEMINA ?tra)
 			(SEMINATORE ?attr)
 			(CAMPO ?campocorrente)
@@ -329,6 +333,27 @@
 			(on ?cont ?tra)
 			(isSopraTrattore ?cont)
 			(not (seminato ?campocorrente)))
+	:effect (seminato ?campocorrente))
+
+	(:action seminaInDue
+	:parameters (?cont ?cont2 ?tra ?attr ?campocorrente)
+	:precondition (and (contadino ?cont)
+			(contadino ?cont2)
+			(TRA-SEMINA ?tra)
+			(SEMINATORE ?attr)
+			(CAMPO ?campocorrente)
+			(at ?cont ?campocorrente)
+			(at ?cont2 ?campocorrente)
+			(at ?tra ?campocorrente)
+			(at ?attr ?campocorrente)
+			(attaccato ?attr ?tra)
+			(arato ?campocorrente)
+			(on ?cont ?tra)
+			(on ?cont2 ?tra)
+			(isSopraTrattore ?cont)
+			(isSopraTrattore ?cont2)
+			(not (seminato ?campocorrente))
+			(not (= ?cont ?cont2)))
 	:effect (seminato ?campocorrente))
 
 	(:action smontaAratro
