@@ -243,28 +243,6 @@
 			(isSopraTrattore ?cont2))
 	)
 
-	(:action salgonoInDue
-	:parameters (?cont1 ?cont2 ?tra ?camp)
-	:precondition (and 
-			(contadino ?cont1)
-			(contadino ?cont2)
-			(TRA ?tra)
-			(CAMPO ?camp)
-			(at ?cont1 ?camp)
-			(at ?cont2 ?camp)
-			(not(at ?tra ?camp))
-			(not(on ?cont1 ?tra))
-			(not(on ?cont2 ?tra))
-			(not (= ?cont1 ?cont2))
-			(not(isSopraTrattore ?cont1))
-			(not(isSopraTrattore ?cont2)))
-	:effect (and 
-			(on ?cont1 ?tra)
-			(isSopraTrattore ?cont1)			
-			(on ?cont2 ?tra)
-			(isSopraTrattore ?cont2))
-	)
-
 
 	(:action scendi
 	:parameters (?cont ?tra ?camp)
@@ -296,30 +274,6 @@
 			)
 	:effect (and (not(on ?cont2 ?tra))
 			(not (isSopraTrattore ?cont2)))
-	)
-	
-	(:action scendonoInDue
-	:parameters (?cont1 ?cont2 ?tra ?camp)
-	:precondition (and (contadino ?cont1)
-			(contadino ?cont2)
-			(TRA ?tra)
-			(CAMPO ?camp)
-			(at ?cont1 ?camp)
-			(at ?cont2 ?camp)
-			(not (= ?cont1 ?cont2))
-			(at ?tra ?camp)
-			(on ?cont1 ?tra)
-			(on ?cont2 ?tra)
-			(isSopraTrattore ?cont1)
-			(isSopraTrattore ?cont2)
-			)
-	:effect (and 
-			(not(on ?cont1 ?tra))
-			(not (isSopraTrattore ?cont1))
-
-			(not(on ?cont2 ?tra))
-			(not (isSopraTrattore ?cont2))
-			)
 	)
 
 ;azioni per arare
