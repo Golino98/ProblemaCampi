@@ -33,8 +33,12 @@
 	)
 
 	(:action spostaContadinoSulTrattore
-	:parameters (?cont ?tra ?campocorrente ?camposuccessivo)
-	:precondition (and (contadino ?cont)
+	:parameters (?cont ?cont2 ?tra ?campocorrente ?camposuccessivo)
+	:precondition (and 
+			(contadino ?cont)
+			(contadino ?cont2)
+			(not(on ?cont2 ?tra))
+			(not(isSopraTrattore ?cont2))
 			(TRA ?tra)
 			(CAMPO ?campocorrente)
 			(CAMPO ?camposuccessivo)
@@ -43,7 +47,8 @@
 			(on ?cont ?tra)
 			(isSopraTrattore ?cont)
 			(CONNESSO ?campocorrente ?camposuccessivo))
-	:effect (and (at ?cont ?camposuccessivo)
+	:effect (and 
+			(at ?cont ?camposuccessivo)
 			(not (at ?cont ?campocorrente))
 			(at ?tra ?camposuccessivo)
 			(not (at ?tra ?campocorrente)))
@@ -76,7 +81,7 @@
 	)
 
 	(:action spostaContadinoSulTrattoreConAratro
-	:parameters (?cont ?tra ?attr ?campocorrente ?camposuccessivo)
+	:parameters (?cont ?cont2 ?tra ?attr ?campocorrente ?camposuccessivo)
 	:precondition (and (contadino ?cont)
 			(TRA ?tra)
 			(TRA-ARA ?tra)
@@ -86,6 +91,8 @@
 			(at ?cont ?campocorrente)
 			(at ?tra ?campocorrente)
 			(at ?attr ?campocorrente)
+			(not(on ?cont2 ?tra))
+			(not(isSopraTrattore ?cont2))
 			(isAttaccato ?attr)
 			(hasAttrezzoAttaccato ?tra)
 			(attaccato ?attr ?tra)
@@ -135,7 +142,7 @@
 	)
 
 	(:action spostaContadinoSulTrattoreConSeminatore
-	:parameters (?cont ?tra ?attr ?campocorrente ?camposuccessivo)
+	:parameters (?cont ?cont2 ?tra ?attr ?campocorrente ?camposuccessivo)
 	:precondition (and (contadino ?cont)
 			(TRA ?tra)
 			(TRA-SEMINA ?tra)
@@ -146,6 +153,8 @@
 			(at ?tra ?campocorrente)
 			(at ?attr ?campocorrente)
 			(on ?cont ?tra)
+			(not(on ?cont2 ?tra))
+			(not(isSopraTrattore ?cont2))
 			(isAttaccato ?attr)
 			(hasAttrezzoAttaccato ?tra)
 			(attaccato ?attr ?tra)
@@ -213,7 +222,6 @@
 			(contadino ?cont2)
 			(TRA ?tra)
 			(CAMPO ?camp)
-			(at ?cont1 ?camp)
 			(at ?cont2 ?camp)
 			(at ?tra ?camp)
 			(not (= ?cont1 ?cont2))
