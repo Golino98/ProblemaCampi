@@ -1,4 +1,4 @@
-(define (domain CAMPI_SENZA_PASSAGGIO)
+(define (domain CAMPI)
 
 (:requirements :typing :equality :negative-preconditions)
 

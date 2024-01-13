@@ -1,0 +1,3 @@
+PER RISOLVERE UN PROBLEMA PDDL:
+ - navigare nella folder FF-X
+ - eseguire: ./ff -o /home/daniele/Documenti/Coding/ProblemaCampi/domain.pddl -f /home/daniele/Documenti/Coding/ProblemaCampi/dieciCampi.pddl

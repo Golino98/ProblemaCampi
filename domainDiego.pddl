@@ -1,4 +1,4 @@
-(define (domain CAMPI)
+(define (domain CAMPI_DIEGO)
     (:requirements :typing)
     (:predicates (CAMPO ?campo)
 		(contadino ?cont)
